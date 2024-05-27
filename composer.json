@@ -1,0 +1,15 @@
+{
+    "name": "ascma/csv-reader",
+    "autoload": {
+        "psr-4": {
+            "CsvReader\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aurélio Soares",
+            "email": "asc.mat@gmail.com"
+        }
+    ],
+    "require": {}
+}
