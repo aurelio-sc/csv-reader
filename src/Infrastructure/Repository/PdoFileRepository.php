@@ -3,6 +3,8 @@
 namespace CsvReader\Infrastructure\Repository;
 
 use CsvReader\Domain\Model\CsvFile;
+use CsvReader\Domain\Model\Delimiter;
+use CsvReader\Domain\Model\Name;
 use CsvReader\Domain\Repository\FileRepository;
 use PDO;
 use PDOStatement;
@@ -31,8 +33,8 @@ class PdoFileRepository implements FileRepository
         
         foreach ($fileDataList as $fileData) {
             $file = new CsvFile(                
-                $fileData['name'],
-                $fileData['delimiter']
+                new Name($fileData['name']),
+                new Delimiter($fileData['delimiter'])
                 );
             $file->setId($fileData['id']);
             

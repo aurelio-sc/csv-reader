@@ -6,6 +6,14 @@ use InvalidArgumentException;
 
 class Delimiter
 {
+    private string $value;
+
+    public function __construct(string $value)
+    {
+        self::validateDelimiter($value);
+        $this->value = $value;
+    }
+
     public static function validateDelimiter(string $delimiter): bool
     {
         if (strlen($delimiter) != 1) {
@@ -13,5 +21,10 @@ class Delimiter
         }
 
         return true;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }

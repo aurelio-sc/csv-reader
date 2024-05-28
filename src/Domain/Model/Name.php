@@ -6,6 +6,14 @@ use InvalidArgumentException;
 
 class Name
 {
+    private string $value;
+
+    public function __construct(string $value)
+    {
+        self::validateName($value);
+        $this->value = $value;
+    }
+
     public static function validateName(string $name): bool
     {
         if (strlen($name) > 255) {
@@ -17,5 +25,10 @@ class Name
         }
 
         return true;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }

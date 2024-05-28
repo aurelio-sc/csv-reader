@@ -5,14 +5,11 @@ namespace CsvReader\Domain\Model;
 class CsvFile
 {
     private ?int $id = null;
-    private string $name;
-    private string $delimiter;
+    private Name $name;
+    private Delimiter $delimiter;
 
-    public function __construct(string $name, string $delimiter = ',')
-    {
-        Name::validateName($name);
-        Delimiter::validateDelimiter($delimiter);
-        
+    public function __construct(Name $name, Delimiter $delimiter = new Delimiter(','))
+    {               
         $this->name = $name;
         $this->delimiter = $delimiter;
     }
@@ -24,12 +21,12 @@ class CsvFile
     
     public function getName(): string
     {
-        return $this->name;
+        return $this->name->getValue();
     }
     
     public function getDelimiter(): string
     {
-        return $this->delimiter;
+        return $this->delimiter->getValue();
     }
 
     public function setId(?int $id): void
@@ -37,12 +34,12 @@ class CsvFile
         $this->id = $id;
     }
 
-    public function setDelimiter(string $delimiter): void
+    public function setDelimiter(Delimiter $delimiter): void
     {
         $this->delimiter = $delimiter;
     }
 
-    public function setName(string $name): void
+    public function setName(Name $name): void
     {
         $this->name = $name;
     }
