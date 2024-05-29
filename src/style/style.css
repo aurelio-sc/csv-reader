@@ -1,5 +1,7 @@
 body {
     font-family: "Fira Mono", monospace;
+    max-width: 1920px;
+    margin: 0 auto;
 }
 
 summary {
@@ -7,47 +9,173 @@ summary {
     padding: 0.5em 1em;
     border: 1px solid #000;
     width: fit-content;
-    margin: 1em;
+    margin-bottom: 1em;
 }
 
-form {
-    margin: 1em 0;
+.container {
+    padding: 30px 30px;
+    @media (min-width: 1200px) {
+        padding: 60px 65px;
+    }
+}
+
+.container-two-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    @media (min-width: 1200px) {
+        flex-direction: row;        
+    }
+}
+
+details {    
+    width: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 0 auto;
+    @media (min-width: 768px) {
+        max-width: 600px;      
+    }
+    @media (min-width: 1200px) {
+        max-width: 400px;      
+    }
+}
+
+details[open] summary ~ * {
+    animation: fade-in .3s ease-in-out;
+}
+
+@keyframes fade-in {
+    0%    {opacity: 0;}
+    100%  {opacity: 1;}
+}
+
+form {        
     display: flex;
     flex-direction: column;
     gap: 1em;    
+    .input-field{
+        border: 1px solid #000;
+        padding: 0.5em;
+        legend {
+            font-weight: 500;
+            margin-bottom: 1em;
+        }
+        input {
+            padding: 0 0.5em;
+            border-radius: 0;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 1em;
+            line-height: 1.6; 
+            transition: all 0.3s ease;   
+            &:active, &:focus {
+                outline: none;
+                border-radius: 0;
+                background-color: #EEEEEE;
+            }    
+        }        
+    }
+    input[type="submit"] {
+        cursor: pointer;
+    }
+    input[type="file"] {
+        display: none;
+    }
+    .file-label {
+        cursor: pointer;
+        width: 100%;
+        border: 1px solid #000;
+        padding: 0.25em;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        &:hover {
+            background-color: #000;
+            color: #FFF;
+        }
+    }
 }
-.input-field {
-    position: relative;
-}
-label {
-    position: absolute;
-    top: 50%;
-    left: 1em;
-    transform: translateY(-50%);
+
+.submit {    
+    width: fit-content;
+    font-family: "Fira Mono", monospace;
+    border-radius: 0;
+    padding: 0.5em 1em;
+    font-weight: 500;
     font-size: 1em;
-    transition: all 0.3s;
-}
-.input-field:focus-within label {
-    top: 10%;
-    transform: none;
-    font-size: 0.75em;
-}
-
-input:valid + label {
-    top: 10%;
+    background-color: #FFF;
+    color: #000;
+    transition: all 0.3s ease;
+    border: 2px solid #000;
+    &:hover {
+        background-color: #000;
+        color: #FFF;
+    }
 }
 
-input, textarea {
-    border: 1px solid #000;
-    padding: 1em 1em 0.5em 1em;
+table {
+    flex-grow: 1;
+    flex-shrink: 1;
     font-size: 1em;
+    line-height: 1.6;
+    tbody {
+        display: flex;
+        flex-direction: column;
+        tr {
+            &:not(:first-child) {
+                border-bottom: 2px solid #000;
+            }
+            th {
+                padding: 0 0.5em 0.5em 0.5em;
+                font-weight: 500;
+                border-bottom: 4px solid #000;
+                letter-spacing: 1px;
+            }
+            td {
+                padding: 0.5em;
+            }
+        }
+    }
 }
 
-input[type="file"] {
-    display: none;
+.table-two-columns {
+    tbody {
+        tr{
+            width: 100%;
+            display: flex;            
+            td, th {
+                width: 50%;
+            }
+            th {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
 }
 
-input[type="submit"] {
-    cursor: pointer;
-    padding: 1em;
+#file-list {
+    tbody {
+        tr{
+            background-color: #FFF;
+            &:nth-child(2n) {
+                background-color: #EEEEEE;
+            }
+            th, td {
+                flex-grow: 1;
+                flex-shrink: 1;
+            }
+            th:nth-child(2n), td:nth-child(2n)  {
+               width: 100px;
+               flex-grow: 0;
+               flex-shrink: 0;
+               display: flex;
+               justify-content: center;
+               border-left: 2px solid #000;
+            }
+        }
+    }
 }
