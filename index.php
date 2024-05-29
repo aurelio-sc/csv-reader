@@ -3,6 +3,7 @@
 use CsvReader\Domain\Model\CsvFile;
 use CsvReader\Infrastructure\Persistence\ConnectionCreator;
 use CsvReader\Infrastructure\Repository\PdoFileRepository;
+use CoffeeCode\Router\Router;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -13,6 +14,19 @@ $repository = new PdoFileRepository($pdo);
 $allFiles = $repository->getAllFiles();
 
 //var_dump($allFiles[0]);
+
+
+$router = new Router("localhost/csv-reader");
+
+$router->namespace("CsvReader\Domain\Controller");
+$router->post("/add", "CsvFileController:addCsvFile", "add-csv-file");
+
+// $router->get("/route", "Controller:method");
+// $router->post("/route/{id}", "Controller:method");
+// $router->put("/route/{id}/profile", "Controller:method");
+// $router->patch("/route/{id}/profile/{photo}", "Controller:method");
+// $router->delete("/route/{id}", "Controller:method");
+$router->dispatch();
 ?>
 
 <!DOCTYPE html>
@@ -31,10 +45,10 @@ $allFiles = $repository->getAllFiles();
     <section class="container container-two-columns">
         <details>
             <summary>Add new file</summary>
-            <form method="POST" enctype="multipart/form-data">
+            <form action="add" method="POST" enctype="multipart/form-data">
                 <fieldset class="input-field">
                     <legend>File name</legend>                
-                    <input type="text" name="fileName" id="fileName" required>
+                    <input type="text" name="fileName" id="fileName">
                 </fieldset>
         
                 <filedset class="input-field">
@@ -61,7 +75,7 @@ $allFiles = $repository->getAllFiles();
             </tr>
             <?php } ?>
         </table>  
-    </section>      
+    </section>    
 </body>
 </html>
 
