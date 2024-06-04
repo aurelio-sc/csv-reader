@@ -6,6 +6,7 @@ use CsvReader\Domain\Model\CsvFile;
 use CsvReader\Domain\Model\Delimiter;
 use CsvReader\Domain\Model\Name;
 use CsvReader\Domain\Repository\FileRepository;
+use Exception;
 use PDO;
 use PDOStatement;
 
@@ -46,6 +47,9 @@ class PdoFileRepository implements FileRepository
 
     public function save(CsvFile $csvFile): bool
     {
+        if (!$this->checkNameAvailability($csvFile)) {
+            throw new Exception('Name already in use');
+        }
         if ($csvFile->getId() === null) {
             return $this->insert($csvFile);
         }
@@ -87,5 +91,15 @@ class PdoFileRepository implements FileRepository
         $statement->bindValue(':id', $csvFile->getId(), PDO::PARAM_INT);
         
         return $statement->execute();
+    }
+
+    private function checkNameAvailability(CsvFile $csvFile): bool
+    {
+        $query = 'SELECT * FROM csv_file WHERE name = :name';
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':name', $csvFile->getName());
+        $statement->execute();
+        
+        return $statement->rowCount() === 0;
     }
 }

@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "CsvReader\\": "src/"
-        }
+        },
+        "files": [
+            "src/config/paths.php"            
+        ]
     },
     "authors": [
         {
