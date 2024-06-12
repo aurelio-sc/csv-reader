@@ -34,8 +34,18 @@ class CsvFileController
                     $error = new ErrorLog($e->getMessage());
                     $error->logError();
                 }
-            }
-            
+            }            
+        }
+    }
+
+    public function viewCsvFile(array $params): void
+    {   
+        print_r($params);        
+        if ($id = $params['id']) {
+            $this->fileRepository = new PdoFileRepository(ConnectionCreator::createConnection());
+            $csvFile = $this->fileRepository->getFile($id);
+            $view = require PATHS['views'] . '/viewCsvFile.php';            
+            echo $view;            
         }
     }
 

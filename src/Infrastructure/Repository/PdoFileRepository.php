@@ -27,6 +27,19 @@ class PdoFileRepository implements FileRepository
         return $this->hydrateFileList($statement);
     }
 
+    public function getFile(int $id): array
+    {
+        $query = 'SELECT * FROM csv_file WHERE id = :id';
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+        
+        if ($statement->rowCount() === 0) {
+            throw new Exception('File not found');
+        }
+        return $this->hydrateFileList($statement);
+    }
+
     public function hydrateFileList(PDOStatement $statement):array
     {
         $fileDataList = $statement->fetchAll();
